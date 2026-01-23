@@ -1,5 +1,5 @@
 .skills {
-  padding: 8rem 2rem;
+  padding: 4rem 2rem 2rem 2rem;
   position: relative;
 }
 
@@ -28,7 +28,7 @@
 /* Skills Section */
 .skillsSection {
   max-width: 1200px;
-  margin: 0 auto 6rem;
+  margin: 0 auto 2rem;
 }
 
 .skillsGrid {
@@ -208,6 +208,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }

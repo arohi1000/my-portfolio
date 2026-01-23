@@ -16,52 +16,53 @@ interface Project {
 const defaultProjects: Project[] = [
   {
     id: 1,
-    title: 'Project Alpha',
-    category: 'Web Development',
-    year: '2024',
-    image: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    title: 'WARDEN',
+    category: 'Trust Protocol',
+    year: '2026',
+    image: '/warden-project.png',
     color: '#667eea',
   },
-  {
-    id: 2,
-    title: 'Project Beta',
-    category: 'UI/UX Design',
-    year: '2024',
-    image: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    color: '#f093fb',
-  },
-  {
-    id: 3,
-    title: 'Project Gamma',
-    category: 'Mobile App',
-    year: '2023',
-    image: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    color: '#4facfe',
-  },
-  {
-    id: 4,
-    title: 'Project Delta',
-    category: 'Branding',
-    year: '2023',
-    image: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    color: '#43e97b',
-  },
-  {
-    id: 5,
-    title: 'Project Epsilon',
-    category: 'Web Development',
-    year: '2023',
-    image: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    color: '#fa709a',
-  },
-  {
-    id: 6,
-    title: 'Project Zeta',
-    category: 'E-commerce',
-    year: '2022',
-    image: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    color: '#a8edea',
-  },
+  // Commented out remaining projects for now
+  // {
+  //   id: 2,
+  //   title: 'Project Beta',
+  //   category: 'UI/UX Design',
+  //   year: '2024',
+  //   image: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+  //   color: '#f093fb',
+  // },
+  // {
+  //   id: 3,
+  //   title: 'Project Gamma',
+  //   category: 'Mobile App',
+  //   year: '2023',
+  //   image: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+  //   color: '#4facfe',
+  // },
+  // {
+  //   id: 4,
+  //   title: 'Project Delta',
+  //   category: 'Branding',
+  //   year: '2023',
+  //   image: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+  //   color: '#43e97b',
+  // },
+  // {
+  //   id: 5,
+  //   title: 'Project Epsilon',
+  //   category: 'Web Development',
+  //   year: '2023',
+  //   image: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+  //   color: '#fa709a',
+  // },
+  // {
+  //   id: 6,
+  //   title: 'Project Zeta',
+  //   category: 'E-commerce',
+  //   year: '2022',
+  //   image: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+  //   color: '#a8edea',
+  // },
 ];
 
 interface ProjectsProps {
@@ -106,7 +107,7 @@ export default function Projects({ projects = defaultProjects }: ProjectsProps) 
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.76, 0, 0.24, 1] }}
           >
-            Featured Projects
+            Coming Soon
           </motion.h2>
         </div>
         
@@ -116,32 +117,40 @@ export default function Projects({ projects = defaultProjects }: ProjectsProps) 
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          A selection of projects I&apos;ve worked on, ranging from web applications to mobile apps and branding.
+          Sneak peeks at my current builds. A mix of personal ventures and technical experiments in progress.
         </motion.p>
       </div>
 
-      {/* Projects Grid */}
-      <div className={styles.grid}>
-        {projects.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index} />
-        ))}
+      {/* Project Showcase */}
+      <div className={styles.showcase}>
+        {/* Left side - Project Tile */}
+        <div className={styles.projectTile}>
+          {projects.slice(0, 1).map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
+        </div>
+
+        {/* Right side - Project Description */}
+        <div className={styles.projectDescription}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <h3 className={styles.descriptionTitle}>The Problem: The Payment Standoff</h3>
+            <p className={styles.descriptionText}>
+              Founders fear being ghosted; developers fear working for free.
+            </p>
+
+            <h3 className={styles.descriptionTitle}>The Solution: Warden</h3>
+            <p className={styles.descriptionText}>
+              The world's first technical escrow protocol. We replace subjective human trust with automated Code Verification. Funds remain locked in the Vault and are only released when the code is verified, running, and passes strict technical gates.
+            </p>
+          </motion.div>
+        </div>
       </div>
 
-      {/* View All Button */}
-      <motion.div
-        className={styles.viewAllWrapper}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <a href="#" className={styles.viewAllButton}>
-          <span>View All Projects</span>
-          <svg viewBox="0 0 24 24" fill="none" className={styles.viewAllArrow}>
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </a>
-      </motion.div>
     </section>
   );
 }
@@ -158,15 +167,23 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.76, 0, 0.24, 1] }}
     >
-      <a href="#" className={styles.projectLink}>
+      <a href="https://usewarden.com/" target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
         {/* Project Image */}
         <div className={styles.projectImageWrapper}>
           <motion.div
             className={styles.projectImage}
-            style={{ background: project.image }}
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.6 }}
           >
+            {project.image.startsWith('/') ? (
+              <img
+                src={project.image}
+                alt={project.title}
+                className={styles.projectImageFile}
+              />
+            ) : (
+              <div style={{ background: project.image }} className={styles.projectImageBackground} />
+            )}
             <div className={styles.projectOverlay}>
               <span className={styles.viewProject}>
                 View Project

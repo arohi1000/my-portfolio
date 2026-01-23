@@ -60,8 +60,8 @@ export default function Home() {
                 {/* Hero Section */}
                 <Hero
                   name="Agnivesh Arohi"
-                  title="Full Stack Developer"
-                  subtitle="Passionate about creating innovative web solutions and user-centered digital experiences. Expertise in modern web technologies, from frontend interfaces to backend systems."
+                  title="Developer | Founder"
+                  subtitle="Helping early-stage startups launch faster with scalable MVPs and high-performance architecture. I combine deep technical expertise in modern stacks with a founder's mindset—focusing on product viability, speed, and user trust. Currently building the future of freelance security with Warden."
                 />
 
                 {/* Projects Section */}

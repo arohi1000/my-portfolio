@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import RotatingText from './RotatingText';
+import VariableProximity from './VariableProximity';
 import styles from './Hero.module.css';
 
 // Text animation variants
@@ -46,9 +48,9 @@ interface HeroProps {
 }
 
 export default function Hero({
-  name = "YOUR NAME",
-  title = "Creative Developer",
-  subtitle = "Building digital experiences with code and creativity"
+  name = "Agnivesh Arohi",
+  title = "Full Stack Developer | Founder at FLUXENTA & WARDEN",
+  subtitle = "Helping early-stage startups launch faster with scalable MVPs and high-performance architecture. I combine deep technical expertise in modern stacks (Next.js, Prisma, Vercel) with a founder's mindset—focusing on product viability, speed, and user trust. Currently building the future of freelance security with Warden."
 }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -87,14 +89,7 @@ export default function Hero({
         className={styles.heroContent}
         style={{ y: y1, opacity }}
       >
-        {/* Eyebrow Text */}
-        <motion.div
-          className={styles.eyebrow}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-        </motion.div>
+
 
         {/* Main Headline */}
         <motion.div
@@ -103,22 +98,52 @@ export default function Hero({
           initial="hidden"
           animate="visible"
         >
-          <div className={styles.line}>
-            <motion.div className={styles.lineInner} variants={lineVariants}>
-              {splitText(name)}
+          <div
+            className={styles.line}
+            ref={containerRef}
+            style={{ position: 'relative' }}
+          >
+            <motion.div
+              className={styles.lineInner}
+              variants={lineVariants}
+              style={{ display: 'block' }} // Ensure visibility
+            >
+              <VariableProximity
+                label={name}
+                className={styles.variableProximityLabel}
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={containerRef}
+                radius={100}
+                falloff="linear"
+              />
             </motion.div>
           </div>
         </motion.div>
 
         {/* Title */}
-        <motion.h2
+        <motion.div
           className={styles.title}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          {title}
-        </motion.h2>
+          <div className="rotatingWrapper" style={{ justifyContent: 'flex-start' }}>
+            <span className="staticText">I&apos;m a</span>
+            <RotatingText
+              texts={['Developer', 'Founder', 'Designer']}
+              mainClassName="rotatingBadge"
+              staggerFrom="first"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="rotatingSplit"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2000}
+            />
+          </div>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p
@@ -140,7 +165,7 @@ export default function Hero({
           <a href="#work" className={styles.ctaButton}>
             <span>View Work</span>
             <svg className={styles.ctaArrow} viewBox="0 0 24 24" fill="none">
-              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <a href="#contact" className={styles.ctaButtonOutline}>

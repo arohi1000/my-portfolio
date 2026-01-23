@@ -46,13 +46,46 @@
   opacity: 0.7;
 }
 
-/* Grid */
-.grid {
+/* Project Showcase */
+.showcase {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   max-width: 1400px;
   margin: 0 auto;
+  align-items: start;
+}
+
+.projectTile {
+  /* Left column for project tile */
+}
+
+.projectDescription {
+  /* Right column for project description */
+  padding-top: 2rem;
+}
+
+.descriptionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--main-dark);
+}
+
+:global(body.dark) .descriptionTitle {
+  color: var(--main-light);
+}
+
+.descriptionText {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-bottom: 2rem;
+  color: var(--main-dark);
+}
+
+:global(body.dark) .descriptionText {
+  color: var(--main-light);
 }
 
 /* Project Card */
@@ -82,6 +115,24 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
+}
+
+.projectImageFile {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #f8f9fa;
+}
+
+:global(body.dark) .projectImageFile {
+  background: #1a1a1a;
+}
+
+.projectImageBackground {
+  width: 100%;
+  height: 100%;
 }
 
 .projectOverlay {
@@ -276,8 +327,8 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .showcase {
+    gap: 2rem;
   }
 }
 
@@ -292,9 +343,13 @@
     margin-bottom: 2rem;
   }
 
-  .grid {
+  .showcase {
     grid-template-columns: 1fr;
     gap: 3rem;
+  }
+
+  .projectDescription {
+    padding-top: 0;
   }
 
   .sectionDescription {

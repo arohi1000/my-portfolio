@@ -180,6 +180,76 @@ body.dark .btn {
   user-select: none;
 }
 
+/* Rotating Text Utilities */
+.flex {
+  display: flex !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.whitespace-pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+.whitespace-pre {
+  white-space: pre !important;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.inline-flex {
+  display: inline-flex !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.rotatingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.rotatingBadge {
+  color: var(--primary-color);
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  height: 1.5em;
+  align-items: center;
+}
+
+.rotatingSplit {
+  overflow: hidden;
+  padding-bottom: 0.1em;
+}
+
+.staticText {
+  opacity: 0.7;
+}
+
+
 .visually-hidden {
   clip-path: inset(50%) !important;
   height: 1px !important;
@@ -208,6 +278,7 @@ body.dark .btn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -218,6 +289,7 @@ body.dark .btn {
     transform: translateY(100%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -228,10 +300,12 @@ body.dark .btn {
   0% {
     transform: scale3d(1, 0, 1);
   }
+
   50% {
     transform: scale3d(1, 1, 1);
     opacity: 1;
   }
+
   100% {
     transform: scale3d(1, 0, 1);
   }

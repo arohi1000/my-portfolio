@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Roboto_Flex } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 
@@ -9,20 +9,26 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+const robotoFlex = Roboto_Flex({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-flex',
+});
+
 export const metadata: Metadata = {
-  title: 'Your Name | Creative Developer Portfolio',
-  description: 'A creative developer portfolio showcasing web development, UI/UX design, and digital experiences.',
+  title: 'Agnivesh | Creative Technologist & Founder',
+  description: 'Building the web of tomorrow with Next.js, AI, and 3D motion. Founder of Fluxenta and Warden.',
   keywords: ['portfolio', 'web developer', 'creative developer', 'frontend developer', 'UI/UX'],
-  authors: [{ name: 'Your Name' }],
+  authors: [{ name: 'Agnivesh Arohi' }],
   openGraph: {
-    title: 'Your Name | Creative Developer Portfolio',
-    description: 'A creative developer portfolio showcasing web development, UI/UX design, and digital experiences.',
+    title: 'Agnivesh | Creative Technologist & Founder',
+    description: 'Building the web of tomorrow with Next.js, AI, and 3D motion. Founder of Fluxenta and Warden.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Your Name | Creative Developer Portfolio',
-    description: 'A creative developer portfolio showcasing web development, UI/UX design, and digital experiences.',
+    title: 'Agnivesh | Creative Technologist & Founder',
+    description: 'Building the web of tomorrow with Next.js, AI, and 3D motion. Founder of Fluxenta and Warden.',
   },
 };
 
@@ -32,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${robotoFlex.variable}`}>
       <body className="light">
         <ThemeProvider>
           {children}

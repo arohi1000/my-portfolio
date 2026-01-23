@@ -11,9 +11,9 @@ interface FooterProps {
 }
 
 export default function Footer({
-  email = 'hello@yourportfolio.com',
-  phone = '+1 234 567 890',
-  location = 'New York, USA',
+  email = 'hello@agnivesharohi.com',
+  phone = '+91 8529319774',
+  location = 'Delhi, India',
 }: FooterProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const brandRef = useRef<HTMLDivElement>(null);
@@ -28,10 +28,10 @@ export default function Footer({
   const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
   const socialLinks = [
-    { name: 'GitHub', href: 'https://github.com' },
-    { name: 'LinkedIn', href: 'https://linkedin.com' },
+    { name: 'GitHub', href: 'https://github.com/arohi1000' },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/agnivesh-arohi-/' },
     { name: 'Twitter', href: 'https://twitter.com' },
-    { name: 'Instagram', href: 'https://instagram.com' },
+    { name: 'Instagram', href: 'https://www.instagram.com/_agnivesh_arohi_/' },
   ];
 
   const navLinks = [
@@ -85,7 +85,7 @@ export default function Footer({
         >
           <span>{email}</span>
           <svg viewBox="0 0 24 24" fill="none" className={styles.emailArrow}>
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </motion.a>
 
@@ -162,13 +162,7 @@ export default function Footer({
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
-          <p>
-            Built with{' '}
-            <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer">
-              Next.js
-            </a>
-          </p>
+          <p>© {new Date().getFullYear()} Agnivesh Arohi. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>

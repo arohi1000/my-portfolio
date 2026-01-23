@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 import styles from './Navigation.module.css';
+import { useLenis } from './SmoothScroll';
 
 const navLinks = [
   { name: 'Work', href: '#work' },
@@ -12,9 +13,10 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com' },
-  { name: 'LinkedIn', href: 'https://linkedin.com' },
+  { name: 'GitHub', href: 'https://github.com/arohi1000' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/agnivesh-arohi-/' },
   { name: 'Twitter', href: 'https://twitter.com' },
+  { name: 'Instagram', href: 'https://www.instagram.com/_agnivesh_arohi_/' },
 ];
 
 export default function Navigation() {
@@ -41,6 +43,23 @@ export default function Navigation() {
     document.body.style.overflow = 'auto';
   };
 
+  /* Hook for smooth scroll */
+  const lenis = useLenis();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo(href);
+    } else {
+      // Fallback
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // For mobile menu
+    if (menuOpen) closeMenu();
+  };
+
   return (
     <>
       {/* HUD Navigation */}
@@ -50,6 +69,7 @@ export default function Navigation() {
           <motion.a
             href="#"
             className={styles.brand}
+            onClick={(e) => handleLinkClick(e, '#intro')} // Assuming top is intro or just preventing reload
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -70,6 +90,7 @@ export default function Navigation() {
                   key={link.name}
                   href={link.href}
                   className={styles.navLink}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                 >
                   <span className={styles.linkText}>{link.name}</span>
                   <span className={styles.linkUnderline} />
@@ -163,7 +184,7 @@ export default function Navigation() {
                     key={link.name}
                     href={link.href}
                     className={styles.menuLink}
-                    onClick={closeMenu}
+                    onClick={(e) => handleLinkClick(e, link.href)}
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -50 }}
@@ -194,7 +215,7 @@ export default function Navigation() {
                     </a>
                   ))}
                 </div>
-                <p className={styles.menuEmail}>hello@yourportfolio.com</p>
+                <p className={styles.menuEmail}>hello@agnivesharohi.com</p>
               </motion.div>
             </div>
           </motion.div>
