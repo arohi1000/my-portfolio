@@ -1,0 +1,252 @@
+/* CSS Variables */
+:root {
+  --main-dark: #1d1d1d;
+  --main-dark-alt: #252525;
+  --main-light: #e5e4e0;
+  --main-light-alt: #f1f0ec;
+  --primary-color: #ff642f;
+  --dark-grey: rgba(218, 218, 218, 0.2);
+  --dark-grey60: rgba(218, 218, 218, 0.6);
+  --light-grey: rgba(111, 111, 111, 0.2);
+  --light-grey60: rgba(111, 111, 111, 0.6);
+  --grey-rotate: #bfbebe;
+  --large-radius: 6.25em;
+  --med-radius: 1.375em;
+  --small-radius: 0.625em;
+  --vh: 1vh;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Light Mode (Default) */
+body.light {
+  background-color: var(--main-light);
+  color: var(--main-dark);
+}
+
+/* Dark Mode */
+body.dark {
+  background-color: var(--main-dark);
+  color: var(--main-light);
+}
+
+/* Selection */
+::selection {
+  background: var(--main-dark);
+  color: var(--main-light);
+}
+
+body.dark ::selection {
+  background: var(--main-light);
+  color: var(--main-dark);
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Typography */
+.text-brand {
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.text-large {
+  font-size: clamp(3rem, 8vw, 10rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.text-medium {
+  font-size: clamp(1.5rem, 3vw, 4rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.text-small {
+  font-size: clamp(0.75rem, 1vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.caps {
+  text-transform: uppercase;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Section */
+section {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--med-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid;
+}
+
+body.light .btn {
+  background: var(--main-light);
+  border-color: var(--light-grey);
+  color: var(--main-dark);
+}
+
+body.dark .btn {
+  background: var(--main-dark);
+  border-color: var(--dark-grey);
+  color: var(--main-light);
+}
+
+.btn:hover {
+  transform: scale(1.02);
+}
+
+/* Utility Classes */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.pointer-none {
+  pointer-events: none;
+  user-select: none;
+}
+
+.visually-hidden {
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Mix Blend Mode */
+.mix-blend-diff {
+  mix-blend-mode: difference;
+  color: var(--main-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale3d(1, 0, 1);
+  }
+  50% {
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale3d(1, 0, 1);
+  }
+}
+
+/* Line for text split animation */
+.line {
+  overflow: hidden;
+  display: block;
+}
+
+.word {
+  display: inline-block;
+}
+
+.char {
+  display: inline-block;
+}
