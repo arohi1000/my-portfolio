@@ -136,6 +136,10 @@ img {
 section {
   min-height: 100vh;
   position: relative;
+  content-visibility: auto;
+  /* Optimizes rendering for off-screen content */
+  contain-intrinsic-size: 1px 1000px;
+  /* Placeholder size for scrolling stability */
 }
 
 /* Buttons */

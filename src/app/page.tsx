@@ -1,15 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { AnimatePresence, motion } from 'framer-motion';
 import Preloader from '@/components/Preloader';
 import Navigation from '@/components/Navigation';
 import CustomCursor from '@/components/CustomCursor';
 import Hero from '@/components/Hero';
-import Projects from '@/components/Projects';
-import Skills from '@/components/Skills';
-import Footer from '@/components/Footer';
-import SmoothScroll from '@/components/SmoothScroll';
+
+// Dynamic Imports for performance
+const Projects = dynamic(() => import('@/components/Projects'), { ssr: false });
+const Skills = dynamic(() => import('@/components/Skills'), { ssr: false });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
+const SmoothScroll = dynamic(() => import('@/components/SmoothScroll'), { ssr: false });
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

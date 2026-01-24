@@ -4,108 +4,243 @@
 }
 
 /* Contact Section */
+/* Contact Section */
 .contactSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 4rem 0;
-  border-top: 1px solid var(--light-grey);
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 6rem 2rem;
+  border-top: 1px solid var(--light-grey);
 }
 
 :global(body.dark) .contactSection {
   border-color: var(--dark-grey);
 }
 
-.contactHeader {
-  margin-bottom: 3rem;
+.contactContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* Left Side - Text */
+.contactLeft {
+  display: flex;
+  flex-direction: column;
 }
 
 .contactLabel {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   opacity: 0.5;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .contactTitle {
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 500;
   letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+  line-height: 1.1;
+  margin-bottom: 2rem;
 }
 
 .contactSubtitle {
   font-size: 1.125rem;
   line-height: 1.6;
   opacity: 0.7;
-  max-width: 600px;
-}
-
-/* Email Link */
-.emailLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem 3rem;
-  background: var(--main-dark);
-  color: var(--main-light);
-  border-radius: 100px;
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  max-width: 500px;
   margin-bottom: 3rem;
 }
 
-:global(body.dark) .emailLink {
-  background: var(--main-light);
-  color: var(--main-dark);
-}
-
-.emailLink:hover {
-  transform: scale(1.05);
-}
-
-.emailArrow {
-  width: 1.5rem;
-  height: 1.5rem;
-  transition: transform 0.3s ease;
-}
-
-.emailLink:hover .emailArrow {
-  transform: translate(4px, -4px);
-}
-
-/* Contact Info */
-.contactInfo {
-  display: flex;
-  gap: 4rem;
-}
-
-.infoItem {
+.contactDetails {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 1.5rem;
+  margin-top: auto;
 }
 
-.infoLabel {
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailLabel {
   font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
+  letter-spacing: 0.1em;
   opacity: 0.5;
 }
 
-.infoValue {
+.detailValue {
   font-size: 1rem;
-  font-weight: 400;
+}
+
+/* Right Side - Form */
+.contactForm {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 3rem;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+:global(body.dark) .contactForm {
+  background: rgba(30, 30, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: inherit;
+  resize: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:global(body.dark) .formInput,
+:global(body.dark) .formTextarea {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s ease;
+}
+
+:global(body.dark) .formInput::placeholder,
+:global(body.dark) .formTextarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.formInput:hover,
+.formTextarea:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+:global(body.dark) .formInput:hover,
+:global(body.dark) .formTextarea:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: rgba(255, 100, 47, 0.03);
+  box-shadow: 0 0 0 4px rgba(255, 100, 47, 0.1);
+}
+
+:global(body.dark) .formInput:focus,
+:global(body.dark) .formTextarea:focus {
+  background: rgba(255, 100, 47, 0.08);
+  box-shadow: 0 0 0 4px rgba(255, 100, 47, 0.15);
+}
+
+.formInput:focus::placeholder,
+.formTextarea:focus::placeholder {
+  opacity: 0.6;
+}
+
+.formTextarea {
+  border-radius: 1.5rem;
+  min-height: 120px;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.submitBtn {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+  padding: 1.1rem 3.5rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #ff7b47 100%);
+  color: white;
+  border: none;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(255, 100, 47, 0.3);
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(255, 100, 47, 0.4);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Status Messages */
+.statusMessage {
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.success {
+  background: rgba(0, 200, 83, 0.12);
+  color: #00c853;
+  border: 1px solid rgba(0, 200, 83, 0.2);
+}
+
+.error {
+  background: rgba(255, 23, 68, 0.12);
+  color: #ff1744;
+  border: 1px solid rgba(255, 23, 68, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contactContent {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .contactTitle {
+    font-size: 2.5rem;
+  }
+
+  .contactForm {
+    padding: 2rem;
+    margin-top: 1rem;
+  }
 }
 
 /* Footer Bottom */
@@ -130,7 +265,10 @@
 
 /* Footer Brand */
 .footerBrand {
-  overflow: hidden;
+  overflow: visible;
+  /* Was hidden, causing clipping */
+  padding: 1rem 0;
+  /* Add vertical padding for swashes */
 }
 
 .brandText {
@@ -142,6 +280,8 @@
 
 .char {
   display: inline-block;
+  padding: 0 0.05em;
+  /* Slight padding to prevent glyph clipping */
 }
 
 /* Footer Nav */

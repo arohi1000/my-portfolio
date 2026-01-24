@@ -74,7 +74,16 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <span className={styles.brandText}>PORTFOLIO</span>
+            <span
+              className={styles.brandText}
+              style={{
+                fontFamily: 'var(--font-alex-brush)',
+                fontSize: '2rem', /* Whisper needs to be larger to be readable */
+                textTransform: 'none'
+              }}
+            >
+              Agnivesh Arohi
+            </span>
           </motion.a>
 
           {/* Desktop Navigation */}

@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { supabase } from '@/lib/supabaseClient';
 import styles from './Footer.module.css';
 
 interface FooterProps {
@@ -18,6 +19,10 @@ export default function Footer({
   const containerRef = useRef<HTMLDivElement>(null);
   const brandRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(brandRef, { once: true, margin: '-100px' });
+
+  // Form State
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -59,52 +64,115 @@ export default function Footer({
     ));
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      const { error } = await supabase.from('messages').insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+      ]);
+
+      if (error) throw error;
+
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
+  };
+
   return (
     <footer ref={containerRef} className={styles.footer} id="contact">
       {/* Contact Section */}
       <div className={styles.contactSection}>
-        <motion.div
-          className={styles.contactHeader}
-          style={{ y, opacity }}
-        >
-          <span className={styles.contactLabel}>Let&apos;s work together</span>
-          <h2 className={styles.contactTitle}>
-            Have a project in mind?
-          </h2>
-          <p className={styles.contactSubtitle}>
-            I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-          </p>
-        </motion.div>
+        <div className={styles.contactContent}>
+          {/* Left: Text & Info */}
+          <motion.div className={styles.contactLeft} style={{ y, opacity }}>
+            <span className={styles.contactLabel}>Let&apos;s work together</span>
+            <h2 className={styles.contactTitle}>Have a project in mind?</h2>
+            <p className={styles.contactSubtitle}>
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            </p>
 
-        <motion.a
-          href={`mailto:${email}`}
-          className={styles.emailLink}
-          style={{ y, opacity }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <span>{email}</span>
-          <svg viewBox="0 0 24 24" fill="none" className={styles.emailArrow}>
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </motion.a>
+            <div className={styles.contactDetails}>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Email</span>
+                <a href={`mailto:${email}`} className={styles.detailValue}>{email}</a>
+              </div>
+              <div className={styles.detailItem}>
+                <span className={styles.detailLabel}>Location</span>
+                <span className={styles.detailValue}>{location}</span>
+              </div>
+            </div>
+          </motion.div>
 
-        <motion.div
-          className={styles.contactInfo}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Phone</span>
-            <span className={styles.infoValue}>{phone}</span>
-          </div>
-          <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Location</span>
-            <span className={styles.infoValue}>{location}</span>
-          </div>
-        </motion.div>
+          {/* Right: Form */}
+          <motion.form
+            className={styles.contactForm}
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <div className={styles.formGroup}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                className={styles.formInput}
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                className={styles.formInput}
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <textarea
+                name="message"
+                placeholder="Tell me about your project"
+                className={styles.formTextarea}
+                rows={4}
+                value={formData.message}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <button type="submit" className={styles.submitBtn} disabled={status === 'loading'}>
+              {status === 'loading' ? 'Sending...' : 'Ping Me'}
+            </button>
+
+            {status === 'success' && (
+              <p className={`${styles.statusMessage} ${styles.success}`}>Message sent successfully!</p>
+            )}
+            {status === 'error' && (
+              <p className={`${styles.statusMessage} ${styles.error}`}>Something went wrong. Please try again.</p>
+            )}
+          </motion.form>
+        </div>
       </div>
 
       {/* Footer Bottom */}
@@ -112,8 +180,18 @@ export default function Footer({
         <div className={styles.footerContent}>
           {/* Brand */}
           <div ref={brandRef} className={styles.footerBrand}>
-            <div className={styles.brandText}>
-              {splitText('PORTFOLIO')}
+            <div
+              className={styles.brandText}
+              style={{
+                fontFamily: 'var(--font-birthstone)',
+                textTransform: 'none',
+                /* Adjust scaling if needed for the new font size */
+              }}
+            >
+              {/* Manual font size adjustment might be needed in CSS module or here if splitText allows */}
+              <span style={{ fontSize: '4rem' }}>
+                {splitText('PORTFOLIO')}
+              </span>
             </div>
           </div>
 

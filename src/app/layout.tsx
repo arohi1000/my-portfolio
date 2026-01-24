@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Roboto_Flex } from 'next/font/google';
+import { Inter, Roboto_Flex, Alex_Brush, Birthstone } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
 
@@ -13,6 +13,20 @@ const robotoFlex = Roboto_Flex({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-roboto-flex',
+});
+
+const alexBrush = Alex_Brush({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-alex-brush',
+});
+
+const birthstone = Birthstone({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-birthstone',
 });
 
 export const metadata: Metadata = {
@@ -38,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${robotoFlex.variable}`}>
+    <html lang="en" className={`${inter.variable} ${robotoFlex.variable} ${alexBrush.variable} ${birthstone.variable}`}>
       <body className="light">
         <ThemeProvider>
           {children}

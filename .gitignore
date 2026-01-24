@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # Vercel
 .vercel
+
+# Antigravity Kit
+.agent

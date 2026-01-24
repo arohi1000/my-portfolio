@@ -1,46 +1,36 @@
-'use client';
-
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiPython, SiMongodb, SiPostgresql, SiGraphql, SiAmazon, SiDocker, SiFigma, SiGit, SiTailwindcss, SiPrisma } from 'react-icons/si';
+import LogoLoop, { LogoItem } from './LogoLoop';
+import SkillCursor from './SkillCursor';
 import styles from './Skills.module.css';
 
-interface Skill {
-  name: string;
-  icon?: string;
-}
-
-const defaultSkills: Skill[] = [
-  { name: 'React' },
-  { name: 'Next.js' },
-  { name: 'TypeScript' },
-  { name: 'Node.js' },
-  { name: 'Python' },
-  { name: 'MongoDB' },
-  { name: 'PostgreSQL' },
-  { name: 'GraphQL' },
-  { name: 'AWS' },
-  { name: 'Docker' },
-  { name: 'Figma' },
-  { name: 'Git' },
+const techLogos: LogoItem[] = [
+  { node: <SiReact />, title: "React", href: "https://react.dev" },
+  { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
+  { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+  { node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org" },
+  { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  { node: <SiPrisma />, title: "Prisma", href: "https://www.prisma.io" },
+  { node: <SiPostgresql />, title: "PostgreSQL", href: "https://www.postgresql.org" },
+  { node: <SiMongodb />, title: "MongoDB", href: "https://www.mongodb.com" },
+  { node: <SiGraphql />, title: "GraphQL", href: "https://graphql.org" },
+  { node: <SiAmazon />, title: "AWS", href: "https://aws.amazon.com" },
+  { node: <SiDocker />, title: "Docker", href: "https://www.docker.com" },
+  { node: <SiFigma />, title: "Figma", href: "https://www.figma.com" },
+  { node: <SiGit />, title: "Git", href: "https://git-scm.com" },
 ];
 
-
-interface SkillsProps {
-  skills?: Skill[];
-}
-
-export default function Skills({
-  skills = defaultSkills,
-}: SkillsProps) {
+export default function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
 
   return (
     <section ref={containerRef} className={styles.skills} id="about">
-      {/* Skills Section */}
-      <div className={styles.skillsSection}>
+      <SkillCursor />
+
+      <div className={styles.sectionHeader}>
         <motion.div
-          className={styles.sectionHeader}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -48,31 +38,34 @@ export default function Skills({
           <span className={styles.sectionLabel}>What I Do</span>
           <h2 className={styles.sectionTitle}>Skills & Technologies</h2>
         </motion.div>
-
-        <div className={styles.skillsGrid}>
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              className={styles.skillItem}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-            >
-              <div className={styles.skillContent}>
-                <span className={styles.skillName}>{skill.name}</span>
-              </div>
-              <div className={styles.skillCorners}>
-                <span className={styles.skillCorner} />
-                <span className={styles.skillCorner} />
-                <span className={styles.skillCorner} />
-                <span className={styles.skillCorner} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
 
+      <div style={{ position: 'relative', overflow: 'hidden', padding: '2rem 0' }}>
+        <LogoLoop
+          logos={techLogos}
+          speed={50}
+          direction="left"
+          logoHeight={50} /* Increased for better visibility */
+          gap={80}
+          hoverSpeed={0} /* Stop on hover */
+          scaleOnHover={true}
+          fadeOut={true}
+        />
 
+        {/* Optional: Second row in reverse speed/direction */}
+        <div style={{ marginTop: '2rem' }}>
+          <LogoLoop
+            logos={[...techLogos].reverse()}
+            speed={50}
+            direction="right"
+            logoHeight={50}
+            gap={80}
+            hoverSpeed={0}
+            scaleOnHover={true}
+            fadeOut={true}
+          />
+        </div>
+      </div>
     </section>
   );
 }

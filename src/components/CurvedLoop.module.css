@@ -1,0 +1,45 @@
+.container {
+    min-height: 50vh;
+    /* Adjusted from min-h-screen to fit in section */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+}
+
+.container:active {
+    cursor: grabbing;
+}
+
+.svg {
+    user-select: none;
+    width: 100%;
+    overflow: visible;
+    display: block;
+    /* Aspect ratio handling might need explicit height in CSS if aspect-ratio not supported, but most modern browsers support it */
+    aspect-ratio: 100/12;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.text {
+    fill: var(--main-dark);
+    font-family: var(--font-pilowlava), sans-serif;
+    /* Using consistent font */
+    transition: fill 0.3s ease;
+}
+
+:global(body.dark) .text {
+    fill: var(--main-light);
+}
+
+.hiddenText {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
