@@ -11,7 +11,7 @@
   "dependencies": {
     "@studio-freight/lenis": "^1.0.33",
     "@supabase/supabase-js": "^2.91.1",
-    "framer-motion": "^10.16.0",
+    "framer-motion": "^10.18.0",
     "gsap": "^3.12.2",
     "next": "^14.0.0",
     "react": "^18.2.0",
