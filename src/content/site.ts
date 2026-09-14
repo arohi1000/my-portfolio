@@ -3,7 +3,8 @@ export const site = {
   title: 'Full-stack developer & founder of Fluxenta',
   description:
     'Full-stack developer and founder of Fluxenta. I design and build storefronts, product platforms and launch sites with Next.js, TypeScript and Postgres.',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://my-portfolio-three-mu-91.vercel.app',
+  // The apex domain redirects to www on Vercel, so www is the canonical host.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.agnivesharohi.com',
   email: 'hello@agnivesharohi.com',
   location: 'Delhi, India',
   studio: { name: 'Fluxenta', href: 'https://fluxenta.dev' },
