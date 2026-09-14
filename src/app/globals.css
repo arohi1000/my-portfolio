@@ -1,330 +1,519 @@
-/* CSS Variables */
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-on-accent: #151513;
+}
+
+@theme {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ------------------------------------------------------------------ tokens */
+
 :root {
-  --main-dark: #1d1d1d;
-  --main-dark-alt: #252525;
-  --main-light: #e5e4e0;
-  --main-light-alt: #f1f0ec;
-  --primary-color: #ff642f;
-  --dark-grey: rgba(218, 218, 218, 0.2);
-  --dark-grey60: rgba(218, 218, 218, 0.6);
-  --light-grey: rgba(111, 111, 111, 0.2);
-  --light-grey60: rgba(111, 111, 111, 0.6);
-  --grey-rotate: #bfbebe;
-  --large-radius: 6.25em;
-  --med-radius: 1.375em;
-  --small-radius: 0.625em;
-  --vh: 1vh;
+  --paper: #ecebe6;
+  --paper-2: #e2e0d9;
+  --ink: #151513;
+  --muted: #5c5a54;
+  --line: rgb(21 21 19 / 0.14);
+  --accent: #ff5a1f;
+  --accent-text: #c2410c;
+  --gutter: clamp(1rem, 3.2vw, 2.75rem);
+  color-scheme: light;
 }
 
-/* Reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #121211;
+    --paper-2: #1c1c1a;
+    --ink: #ecebe6;
+    --muted: #a3a099;
+    --line: rgb(236 235 230 / 0.14);
+    --accent-text: #ff7a45;
+    color-scheme: dark;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+:root[data-theme='dark'] {
+  --paper: #121211;
+  --paper-2: #1c1c1a;
+  --ink: #ecebe6;
+  --muted: #a3a099;
+  --line: rgb(236 235 230 / 0.14);
+  --accent-text: #ff7a45;
+  color-scheme: dark;
 }
 
-html.lenis,
-html.lenis body {
-  height: auto;
+/* -------------------------------------------------------------------- base */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: #151513;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+/* ------------------------------------------------------------ theme toggle */
+
+.icon-moon {
+  display: none;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+:root[data-theme='dark'] .icon-sun {
+  display: none;
 }
 
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-/* Light Mode (Default) */
-body.light {
-  background-color: var(--main-light);
-  color: var(--main-dark);
-}
-
-/* Dark Mode */
-body.dark {
-  background-color: var(--main-dark);
-  color: var(--main-light);
-}
-
-/* Selection */
-::selection {
-  background: var(--main-dark);
-  color: var(--main-light);
-}
-
-body.dark ::selection {
-  background: var(--main-light);
-  color: var(--main-dark);
-}
-
-/* Links */
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Images */
-img {
-  max-width: 100%;
+:root[data-theme='dark'] .icon-moon {
   display: block;
 }
 
-/* Typography */
-.text-brand {
-  font-size: clamp(1rem, 1.2vw, 1.5rem);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .icon-sun {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .icon-moon {
+    display: block;
+  }
 }
 
-.text-large {
-  font-size: clamp(3rem, 8vw, 10rem);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.02em;
+/* ------------------------------------------------- mouse vs touch surfaces */
+
+.pointer-only {
+  display: none;
 }
 
-.text-medium {
-  font-size: clamp(1.5rem, 3vw, 4rem);
-  font-weight: 500;
-  line-height: 1.2;
+@media (hover: hover) and (pointer: fine) {
+  .pointer-only {
+    display: block;
+  }
+
+  .touch-only {
+    display: none;
+  }
 }
 
-.text-small {
-  font-size: clamp(0.75rem, 1vw, 1rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
+/* ------------------------------------------------------ hero line reveal */
+
+/* Content is server-rendered and readable immediately; the reveal is CSS so it
+   runs off the main thread while the page hydrates. */
+.line-mask {
+  display: block;
+  overflow: clip;
+  /* Room for descenders and the overhang that tight tracking creates. */
+  padding: 0 0.08em 0.24em 0;
+  margin: 0 -0.08em -0.24em 0;
 }
 
-.caps {
-  text-transform: uppercase;
+/* --intro-delay holds these back while the first-visit intro is on screen. */
+.line-in {
+  display: block;
+  animation: line-in 1s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 60ms + var(--intro-delay, 0ms));
 }
 
-/* Container */
-.container {
-  width: 100%;
-  max-width: 1800px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.fade-in {
+  animation: fade-up 800ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 200ms + var(--intro-delay, 0ms));
 }
 
-/* Section */
-section {
-  min-height: 100vh;
-  position: relative;
-  content-visibility: auto;
-  /* Optimizes rendering for off-screen content */
-  contain-intrinsic-size: 1px 1000px;
-  /* Placeholder size for scrolling stability */
+@keyframes line-in {
+  from {
+    transform: translateY(105%);
+  }
 }
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--med-radius);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
 
-body.light .btn {
-  background: var(--main-light);
-  border-color: var(--light-grey);
-  color: var(--main-dark);
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
 }
 
-body.dark .btn {
-  background: var(--main-dark);
-  border-color: var(--dark-grey);
-  color: var(--main-light);
+@media (prefers-reduced-motion: reduce) {
+  .line-in,
+  .fade-in {
+    animation: fade 300ms ease both;
+  }
 }
 
-.btn:hover {
-  transform: scale(1.02);
+/* ------------------------------------------------------------ scroll reveal */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: fade-up var(--ease-out) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
 }
 
-/* Utility Classes */
-.overflow-hidden {
+/* --------------------------------------------------------------- work index */
+
+@media (hover: hover) and (pointer: fine) {
+  .work-row {
+    transition: opacity 200ms ease;
+  }
+
+  .work-list:hover .work-row:not(:hover),
+  .work-list:has(.work-row:focus-visible) .work-row:not(:focus-visible) {
+    opacity: 0.35;
+  }
+}
+
+.preview {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+}
+
+.preview[data-visible='true'] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.preview-stack {
+  transition: transform 400ms var(--ease-in-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview,
+  .preview[data-visible='true'] {
+    transform: none;
+  }
+
+  .preview-stack {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------- page transitions */
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -60px;
+  animation:
+    150ms var(--ease-out) both vt-fade reverse,
+    400ms var(--ease-in-out) both vt-slide reverse;
+}
+
+::view-transition-new(.nav-forward) {
+  --slide-offset: 60px;
+  animation:
+    210ms var(--ease-out) 150ms both vt-fade,
+    400ms var(--ease-in-out) both vt-slide;
+}
+
+::view-transition-old(.nav-back) {
+  --slide-offset: 60px;
+  animation:
+    150ms var(--ease-out) both vt-fade reverse,
+    400ms var(--ease-in-out) both vt-slide reverse;
+}
+
+::view-transition-new(.nav-back) {
+  --slide-offset: -60px;
+  animation:
+    210ms var(--ease-out) 150ms both vt-fade,
+    400ms var(--ease-in-out) both vt-slide;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vt-slide {
+  from {
+    translate: var(--slide-offset);
+  }
+
+  to {
+    translate: 0;
+  }
+}
+
+/* Reduced motion keeps the crossfade and drops the slide. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.nav-forward),
+  ::view-transition-old(.nav-back) {
+    animation: 150ms ease both vt-fade reverse;
+  }
+
+  ::view-transition-new(.nav-forward),
+  ::view-transition-new(.nav-back) {
+    animation: 210ms ease 150ms both vt-fade;
+  }
+}
+
+/* ------------------------------------------------------------- intro loader */
+
+/* Timeline (from first paint):
+     150ms   words start flashing, counter and bar start running
+     630ms   the name rises
+     1350ms  content fades; ink columns lift, accent columns follow 110ms later
+     ~2400ms loader removed by the boot script; hero lines rise from ~1500ms */
+
+@property --intro-count {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.intro {
+  display: none;
+}
+
+:root[data-intro] {
   overflow: hidden;
 }
 
-.pointer-none {
-  pointer-events: none;
-  user-select: none;
+:root[data-intro-delay] {
+  --intro-delay: 1500ms;
 }
 
-/* Rotating Text Utilities */
-.flex {
-  display: flex !important;
+:root[data-intro] .intro {
+  --start: 150ms;
+  --step: 120ms;
+  --exit: 1350ms;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: block;
+  color: #ecebe6;
 }
 
-.flex-wrap {
-  flex-wrap: wrap !important;
+:root[data-intro='skip'] .intro {
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
 }
 
-.whitespace-pre-wrap {
-  white-space: pre-wrap !important;
-}
-
-.whitespace-pre {
-  white-space: pre !important;
-}
-
-.relative {
-  position: relative !important;
-}
-
-.sr-only {
+.intro-panels {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
 }
 
-.inline-flex {
-  display: inline-flex !important;
+.intro-col {
+  margin-right: -1px; /* no hairline gaps between neighbouring columns */
+  animation: intro-lift 700ms var(--ease-in-out) both;
+  animation-delay: calc(var(--exit) + var(--c) * 45ms);
 }
 
-.inline-block {
-  display: inline-block !important;
+.intro-panels-ink .intro-col {
+  background-color: #151513;
 }
 
-.rotatingWrapper {
+.intro-panels-accent .intro-col {
+  background-color: var(--accent);
+  animation-delay: calc(var(--exit) + 110ms + var(--c) * 45ms);
+}
+
+@media (max-width: 767px) {
+  .intro-panels {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .intro-col:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+.intro-content {
+  position: absolute;
+  inset: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-size: clamp(1.5rem, 3vw, 3rem);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem var(--gutter) 1.5rem;
+  animation: intro-content-out 300ms var(--ease-out) var(--exit) both;
 }
 
-.rotatingBadge {
-  color: var(--primary-color);
-  padding: 0;
-  display: inline-flex;
-  justify-content: center;
-  height: 1.5em;
-  align-items: center;
+.intro-meta,
+.intro-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(236 235 230 / 0.6);
 }
 
-.rotatingSplit {
-  overflow: hidden;
-  padding-bottom: 0.1em;
+.intro-words {
+  position: relative;
+  height: 1em;
+  font-size: clamp(3rem, 11vw, 11rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
 }
 
-.staticText {
-  opacity: 0.7;
+.intro-word,
+.intro-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
 }
 
-
-.visually-hidden {
-  clip-path: inset(50%) !important;
-  height: 1px !important;
-  width: 1px !important;
-  overflow: hidden !important;
-  position: absolute !important;
-  white-space: nowrap !important;
-  border: 0 !important;
+.intro-word {
+  opacity: 0;
+  animation: intro-flash var(--step) steps(1, end) calc(var(--start) + var(--w) * var(--step));
 }
 
-/* Mix Blend Mode */
-.mix-blend-diff {
-  mix-blend-mode: difference;
-  color: var(--main-light);
+.intro-name {
+  overflow: clip;
+  padding: 0 0.08em 0.14em 0;
+  margin: 0 -0.08em -0.14em 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale3d(1, 0, 1);
-  }
-
-  50% {
-    transform: scale3d(1, 1, 1);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale3d(1, 0, 1);
-  }
-}
-
-/* Line for text split animation */
-.line {
-  overflow: hidden;
+.intro-name > span {
   display: block;
+  animation: line-in 600ms var(--ease-out) both;
+  animation-delay: calc(var(--start) + var(--w) * var(--step));
 }
 
-.word {
+.intro-dot {
   display: inline-block;
+  width: 0.14em;
+  height: 0.14em;
+  margin-left: 0.08em;
+  border-radius: 50%;
+  background-color: var(--accent);
 }
 
-.char {
-  display: inline-block;
+.intro-count {
+  font-family: var(--font-sans);
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: #ecebe6;
+  font-variant-numeric: tabular-nums;
+  counter-reset: intro-count var(--intro-count);
+  animation: intro-count calc(var(--exit) - var(--start)) linear var(--start) both;
+}
+
+.intro-count::after {
+  content: counter(intro-count);
+}
+
+.intro-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: var(--accent);
+  transform-origin: left;
+  animation: intro-bar calc(var(--exit) - var(--start)) linear var(--start) both;
+}
+
+@keyframes intro-flash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-count {
+  to {
+    --intro-count: 100;
+  }
+}
+
+@keyframes intro-bar {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes intro-content-out {
+  to {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+}
+
+@keyframes intro-lift {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+/* The boot script never starts it for reduced motion; this covers a preference change mid-session. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-intro] .intro {
+    display: none;
+  }
 }
